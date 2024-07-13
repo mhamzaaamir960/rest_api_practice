@@ -11,6 +11,7 @@ function UserCard({ data }) {
       <h5>{data.phone}</h5>
 
       <button onClick={() => window.location.reload()}>Refresh</button>
+
     </div>
   );
 }

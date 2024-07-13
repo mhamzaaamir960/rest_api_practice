@@ -7,9 +7,19 @@ export const getPosts = async () => {
 };
 
 export const getRandomData = async () => {
-  const res = await fetch("https://randomuser.me/api", {
-    method: "GET",
-  });
+  try {
+    const res = await fetch("https://randomuser.me/api", {
+      method: "GET",
+    });
 
-  return await res.json();
+    if (!res.ok) {
+      throw new Error(`Something went wrong!  ${res.status}`);
+    }
+
+    return await res.json();
+  } catch (error) {
+    return { error: error.message };
+  } finally {
+    console.log('Working...')
+  }
 };
