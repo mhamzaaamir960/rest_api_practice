@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import { getPosts, getRandomData } from "./api/api";
+import "./App.css";
+import PostCard from "./components/PostCard";
+import UserCard from "./components/UserCard";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [data, setData] = useState(null);
+
+  // useEffect(() => {
+  //   getPosts().then((posts) => setData(posts));
+  // });
+
+  useEffect(() => {
+    getRandomData().then((user) => setData(user.results[0]));
+    getRandomData().then((user) => console.log(user.results[0]));
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="posts">
+      {data && <UserCard data={data} />}
+      {/* {data
+        ? data.map((posts) => (
+            <PostCard key={posts.id} id={posts.id} title={posts.title} body={posts.body} />
+          ))
+        : "loading... "} */}
+    </div>
+  );
 }
 
-export default App
+export default App;
